@@ -54,7 +54,11 @@ uint checkTiltInvertZ()
 
 float4 GetTextureSampleColor()
 {
-    float4 rawColor = tex2Dlod(_SamplingTexture, float4(UNITY_ACCESS_INSTANCED_PROP(Props,_TextureColorSampleX), UNITY_ACCESS_INSTANCED_PROP(Props,_TextureColorSampleY), 0, 0));
+    float4 rawColor = tex2Dlod(_SamplingTexture, float4(UNITY_ACCESS_INSTANCED_PROP(Props, _TextureColorSampleX), UNITY_ACCESS_INSTANCED_PROP(Props, _TextureColorSampleY), 0, 0));
+    // Exceed Custom
+    #if defined(_USE_SAMPLING_TEXTURE_BRIGHTNESS)
+    return rawColor;
+    #endif
     float4 h = RGBtoHSV(rawColor.rgb);
     h.z = 1.0;
     return(HSVtoRGB(h));

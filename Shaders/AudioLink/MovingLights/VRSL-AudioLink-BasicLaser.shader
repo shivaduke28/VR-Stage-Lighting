@@ -8,6 +8,7 @@
 		 _SamplingTexture ("Texture To Sample From for Color", 2D) = "white" {}
 		 _TextureColorSampleX ("X coordinate to sample the texture from", Range(0,1)) = 0.5
 		 _TextureColorSampleY ("Y coordinate to sample the texture from", Range(0,1)) = 0.5
+        [Toggle(_USE_SAMPLING_TEXTURE_BRIGHTNESS)] _UseSamplingTextureBrightness("Use Texture Brightness (Exceed Custom)", Int) = 0
 
         _UniversalIntensity ("Universal Intensity", Range (0,1)) = 1
         _FinalIntensity("Final Intensity", Range(0,1)) = 1
@@ -47,6 +48,7 @@
             // make fog work
             #pragma multi_compile_fog
             #pragma multi_compile_instancing
+            #pragma shader_feature_local _USE_SAMPLING_TEXTURE_BRIGHTNESS
 
             #include "UnityCG.cginc"
 
@@ -207,6 +209,11 @@
             float4 GetTextureSampleColor()
             {
                 float4 rawColor = tex2Dlod(_SamplingTexture, float4(UNITY_ACCESS_INSTANCED_PROP(Props,_TextureColorSampleX), UNITY_ACCESS_INSTANCED_PROP(Props,_TextureColorSampleY), 0, 0));
+
+                #if defined(_USE_SAMPLING_TEXTURE_BRIGHTNESS)
+                return rawColor;
+                #endif
+
                 float3 h = (RGB2HSV(rawColor.rgb));
                 h.z = 1.0;
                 return float4(hsb2rgb(h),1);
