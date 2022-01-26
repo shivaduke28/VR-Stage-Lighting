@@ -79,6 +79,8 @@ half _RedMultiplier, _GreenMultiplier, _BlueMultiplier, _UniversalIntensity;
 int _EnableStaticEmissionColor;
 float4 _StaticEmission;
 
+int _UseSamplingTextureBrightness;
+
 //Instanced Properties
 
 UNITY_INSTANCING_BUFFER_START(Props)

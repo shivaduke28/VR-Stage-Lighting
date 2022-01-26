@@ -140,6 +140,8 @@ public class VRSLInspector : ShaderGUI
     MaterialProperty _SamplingTexture = null;
     MaterialProperty _EnableColorTextureSample = null;
 
+    // Exceed Custom
+    MaterialProperty _UseSamplingTextureBrightness = null;
 
 
     
@@ -810,13 +812,20 @@ public class VRSLInspector : ShaderGUI
     public void ColorTextureSamplingGUI(MaterialEditor matEditor, MaterialProperty[] props)
     {
         if(isDMXCompatible || isRTShader || isDiscoBall) return;
-            matEditor.ShaderProperty(_EnableColorTextureSample, new GUIContent("Enable Color Texture Sampling", "Check this box if you wish to sample seperate texture for the color. The color will be influenced by the intensity of the original emission color!"));
+        matEditor.ShaderProperty(_EnableColorTextureSample, new GUIContent("Enable Color Texture Sampling", "Check this box if you wish to sample seperate texture for the color. The color will be influenced by the intensity of the original emission color!"));
+        if(_EnableColorTextureSample.floatValue > 0)
+        {
             EditorGUI.indentLevel++;
             matEditor.TexturePropertySingleLine(new GUIContent("Color Sampling Texture", "The texture to sample the color from when ''Enable Color Texture Sampling'' is enabled"),_SamplingTexture);
+            if (_UseSamplingTextureBrightness != null)
+            {
+                matEditor.ShaderProperty(_UseSamplingTextureBrightness, new GUIContent("Use Texture Brightness (Exceed)"));
+            }
             matEditor.ShaderProperty(_TextureColorSampleX, new GUIContent("X UV Coordinate", "The x uv coordinate for where on the texture to sample from (0 to 1)."));
             matEditor.ShaderProperty(_TextureColorSampleY, new GUIContent("Y UV Coordinate", "The y uv coordinate for where on the texture to sample from (0 to 1)."));
             EditorGUI.indentLevel--;
             GUILayout.Space(5);
+        }
         
     }
 

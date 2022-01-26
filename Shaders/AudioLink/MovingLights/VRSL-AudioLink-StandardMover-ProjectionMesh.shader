@@ -50,6 +50,7 @@
 		 _SamplingTexture ("Texture To Sample From for Color", 2D) = "white" {}
 		 _TextureColorSampleX ("X coordinate to sample the texture from", Range(0,1)) = 0.5
 		 _TextureColorSampleY ("Y coordinate to sample the texture from", Range(0,1)) = 0.5
+		[Toggle(_USE_SAMPLING_TEXTURE_BRIGHTNESS)] _UseSamplingTextureBrightness("Use Texture Brightness (Exceed Custom)", Int) = 0
 		//[Header(MOVER CONTROLS)]
 
 
@@ -167,6 +168,7 @@
 			#pragma multi_compile_instancing
 			#pragma instancing_options assumeuniformscaling
 			#pragma multi_compile _DNENABLER_NONE _DNENABLER_USEDNTEXTURE
+			#pragma shader_feature_local _USE_SAMPLING_TEXTURE_BRIGHTNESS
 			#define PROJECTION_YES //To identify the pass in the vert/frag shaders
 
             #include "UnityCG.cginc"

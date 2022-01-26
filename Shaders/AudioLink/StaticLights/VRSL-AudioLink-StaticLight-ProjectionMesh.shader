@@ -33,6 +33,7 @@
 		 _SamplingTexture ("Texture To Sample From for Color", 2D) = "white" {}
 		 _TextureColorSampleX ("X coordinate to sample the texture from", Range(0,1)) = 0.5
 		 _TextureColorSampleY ("Y coordinate to sample the texture from", Range(0,1)) = 0.5
+		[Toggle(_USE_SAMPLING_TEXTURE_BRIGHTNESS)] _UseSamplingTextureBrightness("Use Texture Brightness (Exceed Custom)", Int) = 0
 
 		//[Header(PROJECTION SETTINGS)]
 
@@ -125,6 +126,7 @@
             #pragma fragment frag
 			#pragma multi_compile_fog
 			#pragma multi_compile_instancing
+			#pragma shader_feature_local _USE_SAMPLING_TEXTURE_BRIGHTNESS
 
 			#define PROJECTION_YES
 
